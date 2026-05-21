@@ -31,7 +31,8 @@ public class JwtFilter extends OncePerRequestFilter {
                     request,
                     response
             );
-    }
+            return;
+        }
 
         assert header != null;
         String token = header.substring(7);
@@ -42,5 +43,6 @@ public class JwtFilter extends OncePerRequestFilter {
                     .getContext()
                     .setAuthentication(auth);
         }
-}
+        filterChain.doFilter(request, response);
+    }
 }

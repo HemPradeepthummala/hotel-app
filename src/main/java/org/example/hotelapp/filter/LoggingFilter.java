@@ -21,6 +21,7 @@ public class LoggingFilter implements Filter {
       chain.doFilter(request, response);
     } finally {
       long end = System.currentTimeMillis() - start;
+      System.out.println(response);
       logger.info("total time taken: {}", end);
     }
   }
