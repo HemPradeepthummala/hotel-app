@@ -14,16 +14,25 @@ services:
 
   hotel-api:
     build: .
-    container_name: hotel-api
     restart: always
     deploy:
-      replicas: 1
-    ports:
-      - "3000:3000"
+      replicas: 3
+
     depends_on:
       - mongodb
     environment:
       SPRING_DATA_MONGODB_URI: mongodb://mongodb:27017/hoteldb
+
+  nginx:
+    image: nginx:latest
+    container_name: nginx
+    restart: always
+    ports:
+      - "3000:80"
+    volumes:
+      - ./default.conf:/etc/nginx/default.conf:ro
+    depends_on:
+      - hotel-api
 
 volumes:
   mongo_data:
