@@ -6,8 +6,6 @@ import org.example.hotelapp.view.BookingView;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.ArrayList;
-
 @Service
 public class BookingService {
   private final BookingRepository bookings;
@@ -27,4 +25,10 @@ public class BookingService {
 
     return new BookingView(bookingId);
   }
+
+    public String getRecipt(String bookingId) {
+      Booking bookingInfo = bookings.getBookingsByBookingId(bookingId);
+      System.out.println("bookings  :: " + bookingInfo.generateReceipt());
+      return bookingInfo.generateReceipt();
+    }
 }

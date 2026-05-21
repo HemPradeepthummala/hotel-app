@@ -1,13 +1,12 @@
 package org.example.hotelapp.controller;
 
+import org.example.hotelapp.model.Booking;
 import org.example.hotelapp.service.BookingService;
 import org.example.hotelapp.view.BookingRequest;
 import org.example.hotelapp.view.BookingView;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api/bookings")
@@ -22,5 +21,10 @@ public class BookingController {
   public ResponseEntity<BookingView> bookHotel(@RequestBody BookingRequest bookingRequest) {
     BookingView bookingView = bookingService.book("user1", bookingRequest.hotelId(), bookingRequest.rooms());
     return ResponseEntity.ok(bookingView);
+  }
+  @GetMapping("/{bookingId}/receipt")
+  public ResponseEntity<String> downloadReceipt(@PathVariable String bookingId){
+    String recipt = bookingService.getRecipt(bookingId);
+    return new ResponseEntity<>(recipt,HttpStatus.OK);
   }
 }

@@ -17,4 +17,8 @@ public class Booking {
     this.hotelId = hotelId;
     this.rooms = rooms;
   }
+
+  public String generateReceipt() {
+     return String.format("you have booked %s rooms", rooms);
+  }
 }
