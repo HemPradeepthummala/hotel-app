@@ -1,7 +1,8 @@
 package org.example.hotelapp.controller;
 
+import org.example.hotelapp.exception.UserNotFoundException;
 import org.example.hotelapp.service.AppUserDetailsService;
-import org.example.hotelapp.service.JwtService;
+import org.example.hotelapp.view.LoginRequest;
 import org.example.hotelapp.view.SignUpRequest;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -20,8 +21,14 @@ public class AuthenticationController {
   }
 
   @PostMapping("/register")
-  public ResponseEntity<String> login(@RequestBody SignUpRequest signUpRequest) {
+  public ResponseEntity<String> register(@RequestBody SignUpRequest signUpRequest) {
     String userId = appUserDetailsService.registerUser(signUpRequest);
     return ResponseEntity.ok(userId);
+  }
+
+  @PostMapping("/login")
+  public ResponseEntity<String> login(@RequestBody LoginRequest loginRequest) throws UserNotFoundException {
+    String username = appUserDetailsService.loginUser(loginRequest);
+    return ResponseEntity.ok(username);
   }
 }

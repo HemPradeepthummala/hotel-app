@@ -1,7 +1,6 @@
 package org.example.hotelapp.controller;
 
-import org.example.hotelapp.exception.InvalidCityName;
-import org.example.hotelapp.model.Hotel;
+import org.example.hotelapp.exception.CityNotFoundException;
 import org.example.hotelapp.service.SearchServices;
 import org.example.hotelapp.view.HotelView;
 import org.springframework.http.ResponseEntity;
@@ -23,7 +22,7 @@ public class HotelController {
     public ResponseEntity<List<HotelView>> search(@RequestParam String city){
 	    try {
 		    return ResponseEntity.ok(searchServices.searchHotel(city));
-	    } catch (InvalidCityName e) {
+	    } catch (CityNotFoundException e) {
 		    return ResponseEntity.badRequest().build();
 	    }
     }

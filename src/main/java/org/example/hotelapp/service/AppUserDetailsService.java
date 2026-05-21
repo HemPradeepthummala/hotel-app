@@ -1,8 +1,10 @@
 package org.example.hotelapp.service;
 
 
+import org.example.hotelapp.exception.UserNotFoundException;
 import org.example.hotelapp.model.User;
 import org.example.hotelapp.repository.UserRepository;
+import org.example.hotelapp.view.LoginRequest;
 import org.example.hotelapp.view.SignUpRequest;
 import org.jspecify.annotations.NonNull;
 import org.springframework.context.annotation.Bean;
@@ -40,8 +42,18 @@ public class AppUserDetailsService implements UserDetailsService {
     return this.userRepository.findUserIdByUsername(userDetails.username());
   }
 
-  @Bean
   public PasswordEncoder passWordEncoder() {
     return new BCryptPasswordEncoder();
+  }
+
+  public String loginUser(LoginRequest loginRequest) throws UserNotFoundException {
+    UserDetails user = this.userRepository.findUserByUsername(loginRequest.username());
+    String storedPassword = user.getPassword();
+
+    assert storedPassword != null;
+    if (!storedPassword.equals(loginRequest.password())) {
+      throw new UserNotFoundException("");
+    }
+    return "OK";
   }
 }
