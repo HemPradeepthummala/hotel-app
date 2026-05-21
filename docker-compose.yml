@@ -1,0 +1,38 @@
+version: "3.9"
+
+services:
+  mongodb:
+    image: mongo:7
+    container_name: mongodb
+    restart: always
+    ports:
+      - "27017:27017"
+    environment:
+      MONGO_INITDB_DATABASE: hoteldb
+    volumes:
+      - mongo_data:/data/db
+
+  hotel-api:
+    build: .
+    restart: always
+    deploy:
+      replicas: 3
+
+    depends_on:
+      - mongodb
+    environment:
+      SPRING_DATA_MONGODB_URI: mongodb://mongodb:27017/hoteldb
+
+  nginx:
+    image: nginx:latest
+    container_name: nginx
+    restart: always
+    ports:
+      - "3000:80"
+    volumes:
+      - ./default.conf:/etc/nginx/default.conf:ro
+    depends_on:
+      - hotel-api
+
+volumes:
+  mongo_data:
