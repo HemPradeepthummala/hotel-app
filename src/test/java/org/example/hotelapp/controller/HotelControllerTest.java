@@ -1,7 +1,6 @@
 package org.example.hotelapp.controller;
 
-import org.example.hotelapp.exception.InvalidCityName;
-import org.example.hotelapp.model.Hotel;
+import org.example.hotelapp.exception.CityNotFoundException;
 import org.example.hotelapp.service.SearchServices;
 import org.example.hotelapp.view.HotelView;
 import org.junit.jupiter.api.Test;
@@ -27,7 +26,7 @@ class HotelControllerTest {
     private SearchServices searchServices;
 
     @Test
-   void shouldReturnHotelsData() throws InvalidCityName {
+   void shouldReturnHotelsData() throws CityNotFoundException {
       HotelView expected = new HotelView("1", "dfd", 5, "hyd");
       Mockito.when(searchServices.searchHotel("hyd")).thenReturn(List.of(expected));
 

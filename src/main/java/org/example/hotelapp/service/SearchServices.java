@@ -1,6 +1,6 @@
 package org.example.hotelapp.service;
 
-import org.example.hotelapp.exception.InvalidCityName;
+import org.example.hotelapp.exception.CityNotFoundException;
 import org.example.hotelapp.model.Hotel;
 import org.example.hotelapp.repository.HotelRepository;
 import org.example.hotelapp.view.HotelView;
@@ -17,9 +17,9 @@ public class SearchServices {
         this.hotels = hotelRepository;
     }
 
-    public List<HotelView> searchHotel(String city) throws InvalidCityName {
+    public List<HotelView> searchHotel(String city) throws CityNotFoundException {
         if (city.isEmpty()) {
-            throw new InvalidCityName("empty city name");
+            throw new CityNotFoundException("empty city name");
         }
         List<Hotel> hotelByCity = hotels.findHotelByCity(city);
         return hotelByCity.stream().map(Hotel::project).toList();
