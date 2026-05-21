@@ -2,6 +2,7 @@ package org.example.hotelapp.controller;
 
 import org.example.hotelapp.exception.UserNotFoundException;
 import org.example.hotelapp.service.AppUserDetailsService;
+import org.example.hotelapp.service.JwtService;
 import org.example.hotelapp.view.LoginRequest;
 import org.example.hotelapp.view.SignUpRequest;
 import org.springframework.http.ResponseEntity;
@@ -15,10 +16,12 @@ import org.springframework.web.bind.annotation.RestController;
 public class AuthenticationController {
 
   private final AppUserDetailsService appUserDetailsService;
+    private final JwtService jwtService;
 
-  public AuthenticationController(AppUserDetailsService appUserDetailsService) {
+    public AuthenticationController(AppUserDetailsService appUserDetailsService, JwtService jwtService) {
     this.appUserDetailsService = appUserDetailsService;
-  }
+        this.jwtService = jwtService;
+    }
 
   @PostMapping("/register")
   public ResponseEntity<String> register(@RequestBody SignUpRequest signUpRequest) {
@@ -29,6 +32,7 @@ public class AuthenticationController {
   @PostMapping("/login")
   public ResponseEntity<String> login(@RequestBody LoginRequest loginRequest) throws UserNotFoundException {
     String username = appUserDetailsService.loginUser(loginRequest);
-    return ResponseEntity.ok(username);
+    String token = jwtService.generateToken(username);
+    return ResponseEntity.ok(token);
   }
 }

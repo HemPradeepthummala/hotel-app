@@ -8,12 +8,13 @@ import org.springframework.security.config.annotation.web.configurers.AbstractHt
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.stereotype.Component;
 
 @Component
 public class Security{
   @Bean
-  public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) {
+  public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity,JwtFilter jwtFilter) {
     httpSecurity
         .cors(Customizer.withDefaults())
         .csrf(AbstractHttpConfigurer::disable)
@@ -21,7 +22,8 @@ public class Security{
             .requestMatchers("/api/users/register").permitAll()
             .requestMatchers("/api/users/login").permitAll()
             .anyRequest().authenticated())
-        .formLogin(Customizer.withDefaults());
+        .formLogin(Customizer.withDefaults())
+            .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class);
 
     return httpSecurity.build();
   }
