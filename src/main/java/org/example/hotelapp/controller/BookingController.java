@@ -20,7 +20,7 @@ public class BookingController {
 
   @PostMapping
   public ResponseEntity<BookingView> bookHotel(@RequestBody BookingRequest bookingRequest) {
-    BookingView bookingView = bookingService.book("user1", bookingRequest.hotelId(), bookingRequest.roomCount());
+    BookingView bookingView = bookingService.book("user1", bookingRequest.hotelId(), bookingRequest.rooms());
     return ResponseEntity.ok(bookingView);
   }
 }
