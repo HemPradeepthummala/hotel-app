@@ -1,8 +1,8 @@
-package org.example.hotelapp.controllers;
+package org.example.hotelapp.controller;
 
-import org.example.hotelapp.exceptions.InvalidCityName;
-import org.example.hotelapp.models.Hotel;
-import org.example.hotelapp.services.SearchServices;
+import org.example.hotelapp.exception.InvalidCityName;
+import org.example.hotelapp.model.Hotel;
+import org.example.hotelapp.service.SearchServices;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;

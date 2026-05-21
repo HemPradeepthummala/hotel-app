@@ -1,6 +1,6 @@
-package org.example.hotelapp.models;
+package org.example.hotelapp.model;
 
-import org.example.hotelapp.exceptions.InvalidCityName;
+import org.example.hotelapp.exception.InvalidCityName;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;

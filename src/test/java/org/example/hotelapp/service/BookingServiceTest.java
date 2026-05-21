@@ -1,6 +1,6 @@
-package org.example.hotelapp.services;
+package org.example.hotelapp.service;
 
-import org.example.hotelapp.models.Booking;
+import org.example.hotelapp.model.Booking;
 import org.example.hotelapp.view.BookingView;
 import org.junit.jupiter.api.Test;
 

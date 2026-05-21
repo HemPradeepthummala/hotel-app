@@ -1,4 +1,4 @@
-package org.example.hotelapp.models;
+package org.example.hotelapp.model;
 
 public record Booking(String bookingId, String userId, String hotelId, Integer roomCount) {
 }

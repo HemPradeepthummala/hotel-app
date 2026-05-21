@@ -1,8 +1,8 @@
-package org.example.hotelapp.services;
+package org.example.hotelapp.service;
 
-import org.example.hotelapp.exceptions.InvalidCityName;
-import org.example.hotelapp.models.Hotel;
-import org.example.hotelapp.models.Hotels;
+import org.example.hotelapp.exception.InvalidCityName;
+import org.example.hotelapp.model.Hotel;
+import org.example.hotelapp.model.Hotels;
 import org.springframework.stereotype.Service;
 
 import java.util.List;

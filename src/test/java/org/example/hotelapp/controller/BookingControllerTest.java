@@ -1,6 +1,6 @@
 package org.example.hotelapp.controller;
 
-import org.example.hotelapp.services.BookingService;
+import org.example.hotelapp.service.BookingService;
 import org.example.hotelapp.view.BookingRequest;
 import org.example.hotelapp.view.BookingView;
 import org.junit.jupiter.api.Test;
@@ -15,7 +15,7 @@ import static org.mockito.Mockito.when;
 
 @SpringBootTest
 @AutoConfigureRestTestClient
-class BookingServiceControllerTest {
+class BookingControllerTest {
   @Autowired
   private RestTestClient client;
 
@@ -28,7 +28,7 @@ class BookingServiceControllerTest {
     when(bookingService.book("user1", "hotel1", 2)).thenReturn(expectedBookingView);
 
     BookingView responseBody = client.post()
-        .uri("/api/booking")
+        .uri("/api/bookings")
         .body(new BookingRequest("hotel1", 2))
         .exchange()
         .expectStatus().isOk()
