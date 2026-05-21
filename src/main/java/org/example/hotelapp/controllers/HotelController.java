@@ -1,5 +1,6 @@
 package org.example.hotelapp.controllers;
 
+import org.example.hotelapp.exceptions.InvalidCityName;
 import org.example.hotelapp.models.Hotel;
 import org.example.hotelapp.services.SearchServices;
 import org.springframework.http.ResponseEntity;
@@ -19,6 +20,11 @@ public class HotelController {
 
     @GetMapping("/api/search/hotels")
     public ResponseEntity<List<Hotel>> search(@RequestParam String city){
-        return ResponseEntity.ok(searchServices.searchHotel(city));
+	    try {
+		    return ResponseEntity.ok(searchServices.searchHotel(city));
+	    } catch (InvalidCityName e) {
+		    return ResponseEntity.badRequest().build();
+	    }
     }
+
 }
