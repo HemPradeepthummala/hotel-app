@@ -2,7 +2,8 @@ package org.example.hotelapp.service;
 
 import org.example.hotelapp.exception.InvalidCityName;
 import org.example.hotelapp.model.Hotel;
-import org.example.hotelapp.model.Hotels;
+import org.example.hotelapp.repository.HotelRepository;
+import org.example.hotelapp.view.HotelView;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -10,13 +11,17 @@ import java.util.List;
 
 @Service
 public class SearchServices {
-    private final Hotels hotels;
+    private final HotelRepository hotels;
 
-    public SearchServices(Hotels hotels) {
-        this.hotels = hotels;
+    public SearchServices(HotelRepository hotelRepository) {
+        this.hotels = hotelRepository;
     }
 
-    public List<Hotel> searchHotel(String city) throws InvalidCityName {
-		    return hotels.getHotelsByCity(city);
+    public List<HotelView> searchHotel(String city) throws InvalidCityName {
+        if (city.isEmpty()) {
+            throw new InvalidCityName("empty city name");
+        }
+        List<Hotel> hotelByCity = hotels.findHotelByCity(city);
+        return hotelByCity.stream().map(Hotel::project).toList();
     }
 }

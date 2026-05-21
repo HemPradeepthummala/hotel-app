@@ -3,6 +3,7 @@ package org.example.hotelapp.controller;
 import org.example.hotelapp.exception.InvalidCityName;
 import org.example.hotelapp.model.Hotel;
 import org.example.hotelapp.service.SearchServices;
+import org.example.hotelapp.view.HotelView;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -19,7 +20,7 @@ public class HotelController {
     }
 
     @GetMapping("/api/search/hotels")
-    public ResponseEntity<List<Hotel>> search(@RequestParam String city){
+    public ResponseEntity<List<HotelView>> search(@RequestParam String city){
 	    try {
 		    return ResponseEntity.ok(searchServices.searchHotel(city));
 	    } catch (InvalidCityName e) {
