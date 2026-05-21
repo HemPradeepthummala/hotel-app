@@ -1,26 +1,29 @@
 package org.example.hotelapp.service;
 
 import org.example.hotelapp.model.Booking;
+import org.example.hotelapp.repository.BookingRepository;
 import org.example.hotelapp.view.BookingView;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 
 @Service
 public class BookingService {
-  private final ArrayList<Booking> bookings;
+  private final BookingRepository bookings;
   private final IdGenerator idGenerator;
 
-  public BookingService(ArrayList<Booking> bookings, IdGenerator idGenerator) {
-    this.bookings = bookings;
+  public BookingService(BookingRepository bookingRepository, IdGenerator idGenerator) {
+    this.bookings = bookingRepository;
     this.idGenerator = idGenerator;
   }
 
-  public BookingView book(String userId, String hotelId, Integer roomCount) {
+  @Transactional
+  public BookingView book(String userId, String hotelId, Integer rooms) {
     String bookingId = idGenerator.generate();
-    Booking booking = new Booking(bookingId, userId, hotelId, roomCount);
+    Booking booking = new Booking(bookingId, userId, hotelId, rooms);
 
-    bookings.add(booking);
+    this.bookings.save(booking);
 
     return new BookingView(bookingId);
   }
