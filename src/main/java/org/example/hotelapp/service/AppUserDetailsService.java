@@ -7,7 +7,6 @@ import org.example.hotelapp.repository.UserRepository;
 import org.example.hotelapp.view.LoginRequest;
 import org.example.hotelapp.view.SignUpRequest;
 import org.jspecify.annotations.NonNull;
-import org.springframework.context.annotation.Bean;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -15,6 +14,8 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import tools.jackson.databind.JsonNode;
+import tools.jackson.databind.ObjectMapper;
 
 @Service
 public class AppUserDetailsService implements UserDetailsService {
@@ -54,6 +55,14 @@ public class AppUserDetailsService implements UserDetailsService {
     if (!storedPassword.equals(loginRequest.password())) {
       throw new UserNotFoundException("");
     }
-    return "OK";
+    return user.getUsername();
+  }
+
+  public String getUserId(String user) {
+    String userId = this.userRepository.findUserIdByUsername(user);
+    ObjectMapper objectMapper = new ObjectMapper();
+    JsonNode jsonNode = objectMapper.readTree(userId);
+    String id = jsonNode.get("_id").asText();
+    return id;
   }
 }
